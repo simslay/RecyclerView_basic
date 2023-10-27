@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView rvVertical;
+    private RecyclerView rvVertical, rvHorizontal;
     private String[] interns, descriptions;
     private int[] avatars = {
             R.drawable.stagiaire_01,
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         rvVertical = findViewById(R.id.rv_vertical);
+        rvHorizontal = findViewById(R.id.rv_horizontal);
         interns = getResources().getStringArray(R.array.interns);
         descriptions = getResources().getStringArray(R.array.descriptions);
     }
@@ -40,8 +41,20 @@ public class MainActivity extends AppCompatActivity {
                 this, LinearLayoutManager.VERTICAL, false
         );
 
-        rvVertical.setAdapter(adapter);
         rvVertical.setLayoutManager(linearLayoutManager);
+        rvVertical.setAdapter(adapter);
+    }
+
+    private void fillRecyclerHorizontal() {
+        MyRecyclerHorizontalAdapter adapter = new MyRecyclerHorizontalAdapter(
+                this, interns, avatars
+        );
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                this, LinearLayoutManager.HORIZONTAL, false
+        );
+
+        rvHorizontal.setLayoutManager(linearLayoutManager);
+        rvHorizontal.setAdapter(adapter);
     }
 
     @Override
@@ -51,5 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         fillRecyclerVertical();
+        fillRecyclerHorizontal();
     }
 }
